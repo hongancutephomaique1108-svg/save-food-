@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The Kindness Cloud - Trạm sạc cảm xúc, nơi lan tỏa sự tử tế và bảo vệ trái tim">
+    <title>The Kindness Cloud - Trạm Sạc Cảm Xúc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>☁️</text></svg>">
+    
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            --color-bg-top: #fff0f5;
+            --color-bg-bottom: #fddde6;
+            --color-text-dark: #5e4b56;
+            --color-accent-pink: #ff9eb5;
+            --color-accent-pink-dark: #ff7aa2;
+            --color-soft-white: rgba(255, 255, 255, 0.85);
+            --shadow-soft: 0 10px 30px -10px rgba(255, 158, 181, 0.3);
+            --shadow-card: 0 5px 15px rgba(255, 158, 181, 0.5);
+            --border-radius-bubble: 30px;
+            --border-radius-large: 50px;
+            --transition-default: all 0.3s ease;
+            --animation-duration: 0.5s;
+        }
+
+        /* ===== CSS RESET & BASE STYLES ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            color: var(--color-text-dark);
+            background: linear-gradient(180deg, var(--color-bg-top) 0%, var(--color-bg-bottom) 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            color: var(--color-text-dark);
+            line-height: 1.2;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ===== LAYOUT CONTAINER ===== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== FLOATING CLOUDS BACKGROUND ===== */
+        .floating-cloud {
+            position: fixed;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.6;
+            z-index: 0;
+            filter: blur(10px);
+            animation: floatAround 20s infinite linear;
+            pointer-events: none;
+        }
+
+        .cloud-1 { 
+            width: 100px; 
+            height: 60px; 
+            top: 10%; 
+            left: -5%; 
+            animation-duration: 25s; 
+        }
+        .cloud-2 { 
+            width: 150px; 
+            height: 90px; 
+            top: 40%; 
+            right: -10%; 
+            animation-duration: 30s; 
+            animation-delay: -5s;
+        }
+        .cloud-3 { 
+            width: 80px; 
+            height: 50px; 
+            bottom: 20%; 
+            left: 10%; 
+            animation-duration: 18s; 
+        }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(20px, 20px) rotate(5deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        /* ===== HEADER & HERO SECTION ===== */
+        .header {
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero {
+            background: var(--color-soft-white);
+            padding: 60px 40px;
+            border-radius: var(--border-radius-large);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mascot {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, #ffeef2 0%, #ffd1dc 100%);
+            border: 4px dashed var(--color-accent-pink);
+            border-radius: 50%;
+            margin: 0 auto 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            transition: var(--transition-default);
+        }
+
+        .mascot:hover {
+            transform: scale(1.05) rotate(5deg);
+            border-style: solid;
+        }
+
+        .main-title {
+            font-size: clamp(2.2rem, 5vw, 3rem);
+            margin-bottom: 15px;
+            color: var(--color-accent-pink-dark);
+            background: linear-gradient(45deg, var(--color-accent-pink-dark), #ff9eb5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            color: var(--color-text-dark);
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px 40px;
+            background: var(--color-accent-pink);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition-default);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.05);
+            background: var(--color-accent-pink-dark);
+            box-shadow: 0 8px 25px rgba(255, 122, 162, 0.4);
+        }
+
+        .cta-button:hover::after {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* ===== CONTENT SECTIONS ===== */
+        .section {
+            padding: 80px 0;
+            scroll-margin-top: 40px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '✨';
+            display: block;
+            font-size: 20px;
+            margin-top: 10px;
+            animation: twinkle 2s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .section-description {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 50px;
+            font-size: 1.1rem;
+            color: var(--color-text-dark);
+            opacity: 0.9;
+        }
+
+        /* ===== CARD GRID ===== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--color-soft-white);
+            padding: 35px 30px;
+            border-radius: var(--border-radius-bubble);
+            text-align: center;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-default);
+            border: 2px solid transparent;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: #ffd1dc;
+            box-shadow: 0 15px 35px rgba(255, 158, 181, 0.2);
+        }
+
+        .card-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: wiggle 3s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: var(--color-accent-pink-dark);
+        }
+
+        .card-content {
+            flex-grow: 1;
+            color: var(--color-text-dark);
+            opacity: 0.9;
+        }
+
+        /* ===== PRO TIPS SECTION ===== */
+        .pro-tips {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 50px;
+            margin-top: 40px;
+        }
+
+        .tips-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tip-item {
+            background: white;
+            padding: 25px 30px;
+            border-radius: 20px;
+            display: flex;
+            align-items: flex-start;
+            box-shadow: 0 5px 15px rgba(255, 182, 193, 0.1);
+            transition: var(--transition-default);
+            border-left: 4px solid transparent;
+        }
+
+        .tip-item:hover {
+            transform: translateX(10px);
+            border-left-color: var(--color-accent-pink);
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.2);
+        }
+
+        .tip-emoji {
+            font-size: 30px;
+            margin-right: 20px;
+            min-width: 40px;
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            flex-grow: 1;
+        }
+
+        .tip-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--color-accent-pink-dark);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 60px 0 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 158, 181, 0.2);
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: 0.95rem;
+            color: #886e7d;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .footer-icons {
+            font-size: 30px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .copyright {
+            font-size: 0.85rem;
+            color: #a98f9d;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 158, 181, 0.1);
+        }
+
+        /* ===== ACCESSIBILITY & UTILITIES ===== */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--color-accent-pink);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 0 0 4px 0;
+            z-index: 1000;
+            transition: top 0.3s;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
+        }
+
+        .focus-visible {
+            outline: 3px solid var(--color-accent-pink);
+            outline-offset: 3px;
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+            
+            .hero {
+                padding: 40px 25px;
+                border-radius: 30px;
+            }
+            
+            .mascot {
+                width: 120px;
+                height: 120px;
+                font-size: 30px;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .pro-tips {
+                padding: 30px 20px;
+                border-radius: 25px;
+            }
+            
+            .tip-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .tip-emoji {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .card {
+                padding: 25px 20px;
+            }
+            
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 30px 20px;
+            }
+            
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .footer-icons {
+                font-size: 24px;
+            }
+        }
+
+        /* ===== PRINT STYLES ===== */
+        @media print {
+            .floating-cloud,
+            .cta-button,
+            .tip-emoji {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .hero, .card, .pro-tips {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip to content link for accessibility -->
+    <a href="#main-content" class="skip-to-content">Chuyển đến nội dung chính</a>
+
+    <!-- Floating decorative clouds -->
+    <div class="floating-cloud cloud-1" aria-hidden="true"></div>
+    <div class="floating-cloud cloud-2" aria-hidden="true"></div>
+    <div class="floating-cloud cloud-3" aria-hidden="true"></div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header" role="banner">
+            <div class="hero">
+                <div class="mascot" role="img" aria-label="Biểu tượng chú thỏ dễ thương">
+                    🐰💖
+                </div>
+                <h1 class="main-title">Chào mừng đến với <br>The Kindness Cloud</h1>
+                <p class="hero-subtitle">Một góc nhỏ êm ái để chúng mình nạp năng lượng tích cực, học cách bảo vệ trái tim và lan tỏa sự tử tế.</p>
+                <a href="#ouch-moments" class="cta-button" aria-label="Khám phá The Kindness Cloud">
+                    Khám phá ngay <span aria-hidden="true">✨</span>
+                </a>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main id="main-content" role="main">
+            <!-- Ouch Moments Section -->
+            <section id="ouch-moments" class="section" aria-labelledby="ouch-moments-title">
+                <h2 id="ouch-moments-title" class="section-title">Những điều làm trái tim bị "trầy xước"</h2>
+                <p class="section-description">Đôi khi chúng mình bị tổn thương mà không rõ gọi tên nó là gì. Cùng xem nhé!</p>
+                
+                <div class="card-grid">
+                    <article class="card">
+                        <span class="card-icon" aria-hidden="true">💬</span>
+                        <h3 class="card-title">Lời nói gai nhọn</h3>
+                        <p class="card-content">Là khi ai đó dùng từ ngữ để chọc ghẹo, đặt biệt danh xấu, hay nói những điều khiến cậu thấy mình nhỏ bé và buồn bã.</p>
+                    </article>
+                    
+                    <article class="card">
+                        <span class="card-icon" aria-hidden="true">📱</span>
+                        <h3 class="card-title">Chiếc "phím ảo" xấu tính</h3>
+                        <p class="card-content">Là những tin nhắn không vui, những bình luận ác ý trên mạng xã hội, hay bị loại khỏi nhóm chat chung.</p>
+                    </article>
+                    
+                    <article class="card">
+                        <span class="card-icon" aria-hidden="true">❄️</span>
+                        <h3 class="card-title">Sự "đóng băng" lạnh lùng</h3>
+                        <p class="card-content">Là khi bị cố tình ngó lơ, không cho chơi cùng, bị cô lập. Điều này làm trái tim lạnh toát à!</p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Pro Tips Section -->
+            <section class="section" aria-labelledby="pro-tips-title">
+                <h2 id="pro-tips-title" class="section-title">Bí kíp "Siêu Nhân Tốt Bụng" <span aria-hidden="true">🛡️</span></h2>
+                <p class="section-description">Làm sao để không chỉ là người đứng xem (Bystander), mà trở thành người bảo vệ (Upstander) ngầu lòi?</p>
+
+                <div class="pro-tips">
+                    <ul class="tips-list">
+                        <li class="tip-item">
+                            <span class="tip-emoji" aria-hidden="true">🤝</span>
+                            <div class="tip-content">
+                                <h4 class="tip-title">Chiêu thức "Đồng minh bí mật"</h4>
+                                <p>Nếu thấy ai đó bị bắt nạt và cậu sợ phải lên tiếng trực tiếp, hãy đợi lúc an toàn và đến ngồi cạnh bạn ấy. Một người bạn bên cạnh lúc khó khăn là liều thuốc mạnh nhất.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="tip-item">
+                            <span class="tip-emoji" aria-hidden="true">🧸</span>
+                            <div class="tip-content">
+                                <h4 class="tip-title">Chiêu thức "Đánh lạc hướng dễ thương"</h4>
+                                <p>Thấy không khí căng thẳng? Hãy nhảy vào hỏi một câu không liên quan: "Ủa nãy giờ mấy cậu thấy con mèo của tớ chạy qua đây không?". Sự ngắt quãng có thể ngăn chặn điều xấu.</p>
+                            </div>
+                        </li>
+                        
+                        <li class="tip-item">
+                            <span class="tip-emoji" aria-hidden="true">💌</span>
+                            <div class="tip-content">
+                                <h4 class="tip-title">Chiêu thức "Tín hiệu SOS"</h4>
+                                <p>Đừng tự mình gánh vác. Báo ngay cho một "người lớn tin cậy" (thầy cô, ba mẹ, anh chị). Đây không phải là mách lẻo, đây là cứu hộ chuyên nghiệp!</p>
+                            </div>
+                        </li>
+                        
+                        <li class="tip-item">
+                            <span class="tip-emoji" aria-hidden="true">🌸</span>
+                            <div class="tip-content">
+                                <h4 class="tip-title">Luôn nhớ rằng</h4>
+                                <p>Nếu cậu đang bị bắt nạt, đó KHÔNG PHẢI lỗi của cậu. Cậu xứng đáng được yêu thương và an toàn.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer" role="contentinfo">
+            <div class="footer-content">
+                <p class="footer-text">Made with lots of <span aria-label="tình yêu">💖</span> and fuzzy feelings. <br>Hãy luôn tử tế với chính mình và mọi người nhé!</p>
+                <div class="footer-icons" aria-hidden="true">
+                    <span>🦦</span>
+                    <span>🌱</span>
+                    <span>☁️</span>
+                    <span>✨</span>
+                </div>
+                <p class="copyright">© 2024 The Kindness Cloud. All feelings are welcome here.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Accessibility enhancements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add focus-visible class for keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Tab') {
+                    document.body.classList.add('focus-visible');
+                }
+            });
+            
+            document.addEventListener('mousedown', function() {
+                document.body.classList.remove('focus-visible');
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 20,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Add loading animation for cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
+</html>
